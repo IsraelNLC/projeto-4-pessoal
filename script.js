@@ -35,6 +35,7 @@ function quadradoAzul(){
 }
 
 function draw(){
+    console.log(get_data())
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawTag(xPos,yPos,radius);
     drawTag(xPos+25,yPos-55,radius);
@@ -71,4 +72,20 @@ function home_page(){
 function close_alert(){
     document.getElementById("alert").style.display = "none";
     window.location.href = "home";
+}
+
+// get asyncronous data from node
+
+function get_data(){
+let url = "http://127.0.0.1:4010/getdistances"
+let xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        let data = JSON.parse(this.responseText);
+        console.log(data);
+        return data;
+    }
+    }
+xhttp.open("GET", url, true);
+xhttp.send();
 }
