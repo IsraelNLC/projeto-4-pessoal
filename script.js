@@ -1,57 +1,61 @@
 const canvas = document.getElementById("trackingMap");
 const ctx = canvas.getContext("2d");
+const inputDiv = document.getElementById("inputdata");
+var distancia1 = 1;
+var distancia2 = 2;
+var distancia3 = 3;
 
 
-let xPos = canvas.width/2;
-let yPos = canvas.height/2;
-let xSpeed = 2;
-let ySpeed = 2;
+let xTamanho = canvas.width;
+let yTamanho = canvas.height;
+let xMetade = xTamanho/2;
+let yMetade = yTamanho/2;
 let radius = 5;
-function drawTag(xPosFun, yPosFun, radiusFun){
+let ladoRetanguloX = xTamanho/30
+let ladoRetanguloY = yTamanho/20
 
+
+
+function drawTag(xFun, yFun, radiusFun){
     ctx.beginPath();
-    ctx.arc(xPosFun, yPosFun, radiusFun, 0, Math.PI*2, false);
+    ctx.arc(xFun, yFun, radiusFun, 0, Math.PI*2, false);
     ctx.fillStyle = "#17a2b8";
     ctx.fill();
     ctx.closePath();
-    // adds movement to the sphere
-    // xPos += xSpeed;
-    // yPos += ySpeed;
 }
 
-function quadradoVerm(xBeg,yBeg,wid,hei){
+function quadradoAzul(xBeg,yBeg,wid,hei){
     ctx.beginPath();
-    ctx.rect(xBeg,yBeg,wid,hei); //beginning from the upper left, X and Y coordinates, width and height
+    ctx.rect(xBeg,yBeg,wid,hei);
     ctx.fillStyle = "#007bff";
     ctx.fill();
 }
 
-function quadradoAzul(){
-    ctx.beginPath();
-    ctx.rect(160, 10, 100, 40);
-    ctx.strokeStyle = "#17a2b8";
-    ctx.stroke();
-    ctx.closePath();
-}
-
 function draw(){
-    console.log(get_data())
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawTag(xPos,yPos,radius);
-    drawTag(xPos+25,yPos-55,radius);
-    drawTag(xPos-70,yPos-105,radius);
-    drawTag(xPos+100,yPos,radius);
-    quadradoVerm(canvas.width*0.05,canvas.height*0.05,30,30);
-    quadradoVerm(canvas.width*0.95,canvas.height*0.05,-30,30);
-    quadradoVerm((canvas.width)/2,canvas.height*0.95,-30,-30);
+    get_data();
+    // input into html
+    inputDiv.innerHTML = "Distancia 1: " + distancia1 + " Distancia 2: " + distancia2 + " Distancia 3: " + distancia3;
+    var sensor1 = yTamanho/15 * distancia1 + 10;
+    var sensor2 = yTamanho/10 * distancia2 + 300;
+    var sensor3 = yTamanho/20 * distancia3 + 200;
+
+    // var sensor1 = Math.sqrt((xTamanho**2 + yTamanho**2)/4);
+    // var sensor2 = Math.sqrt((xTamanho**2 + yTamanho**2)/4);
+    // var sensor3 = Math.sqrt((xTamanho**2 + yTamanho**2)/4);
+    var x = (sensor3**2 - sensor1**2 - xTamanho**2)/(-2*xTamanho);
+    var y = (sensor2**2 - sensor1**2 - yTamanho**2)/(-2*yTamanho);
+    ctx.clearRect(0, 0, xMetade, yMetade);
+    drawTag(x,y,radius);
+    quadradoAzul(0,0,ladoRetanguloX,ladoRetanguloY);
+    quadradoAzul(0,yTamanho-ladoRetanguloY,ladoRetanguloX,ladoRetanguloY);
+    quadradoAzul(xTamanho-ladoRetanguloX,0,ladoRetanguloX,ladoRetanguloY);
 }
 
-setInterval(draw, 10)
+setInterval(draw, 100);
 
-
-
-function change_url(state){history.pushState({}, null, state);}
-
+function change_url(state){
+    history.pushState({}, null, state);
+}
 
 function direcionar_url(){
     var url = window.location.href;
@@ -73,19 +77,20 @@ function close_alert(){
     document.getElementById("alert").style.display = "none";
     window.location.href = "home";
 }
-
 // get asyncronous data from node
 
 function get_data(){
-let url = "http://127.0.0.1:4010/getdistances"
-let xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        let data = JSON.parse(this.responseText);
-        console.log(data);
-        return data;
+    let url = "http://127.0.0.1:4010/getdistances"
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.responseText);
+            distancia1 = data.dist1;
+            distancia2 = data.dist2;
+            distancia3 = data.dist3;
+        }
+
     }
+    xhttp.open("GET", url, true);
+    xhttp.send();
     }
-xhttp.open("GET", url, true);
-xhttp.send();
-}

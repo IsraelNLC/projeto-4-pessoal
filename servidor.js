@@ -38,7 +38,6 @@ servidor.post("/getdistances", function (req, res) {
 
 servidor.get("/getdistances", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
-  console.log("Recebi a requisição de dados");
   dados = {
     dist1: externalDist1,
     dist2: externalDist2,
