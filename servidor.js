@@ -3,7 +3,7 @@
 const express = require("express");
 const servidor = express();
 const hostname = "127.0.0.1";
-const port = 4010;
+const port = 3010;
 const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 servidor.use(express.static("./"));
@@ -19,9 +19,9 @@ servidor.get("/", function (res, req, next) {
   res.render("index");
 });
 
-var externalDist1 = 0;
-var externalDist2 = 0;
-var externalDist3 = 0;
+var externalDist1 = 4900;
+var externalDist2 = 4630;
+var externalDist3 = 3610;
 
 servidor.post("/getdistances", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
