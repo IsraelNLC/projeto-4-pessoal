@@ -19,9 +19,9 @@ servidor.get("/", function (res, req, next) {
   res.render("index");
 });
 
-var externalDist1 = 0;
-var externalDist2 = 0;
-var externalDist3 = 0;
+var externalDist1 = 4510;
+var externalDist2 = 4920;
+var externalDist3 = 4850;
 
 servidor.post("/getdistances", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");

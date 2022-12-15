@@ -5,7 +5,6 @@ var distancia1 = 0;
 var distancia2 = 0;
 var distancia3 = 0;
 // Adiciona transparência
-ctx.globalAlpha = 0.2;
 
 let xTamanho = canvas.width;
 let yTamanho = canvas.height;
@@ -18,7 +17,16 @@ let ladoRetanguloY = yTamanho / 20;
 function drawTag(xFun, yFun, radiusFun) {
   ctx.beginPath();
   ctx.arc(xFun, yFun, radiusFun, 0, Math.PI * 2, false);
-  ctx.fillStyle = "#6617a2b8";
+  ctx.fillStyle = "blue";
+  ctx.globalAlpha = 1;
+  ctx.fill();
+  ctx.closePath();
+}
+function drawArc(xFun, yFun, radiusFun) {
+  ctx.beginPath();
+  ctx.arc(xFun, yFun, radiusFun, 0, Math.PI * 2, false);
+  ctx.fillStyle = "#7cc9ffff";
+  ctx.globalAlpha = 0.2;
   ctx.fill();
   ctx.closePath();
 }
@@ -57,9 +65,9 @@ function draw() {
   quadradoAzul(0, 0, ladoRetanguloX, ladoRetanguloY);
   quadradoAzul(0, yTamanho - ladoRetanguloY, ladoRetanguloX, ladoRetanguloY);
   quadradoAzul(xTamanho - ladoRetanguloX, 0, ladoRetanguloX, ladoRetanguloY);
-  drawTag(0, 0, sensor1);
-  drawTag(0, yTamanho, sensor2);
-  drawTag(xTamanho, 0, sensor3);
+  drawArc(0, 0, sensor1);
+  drawArc(0, yTamanho, sensor2);
+  drawArc(xTamanho, 0, sensor3);
 }
 
 setInterval(draw, 100);
