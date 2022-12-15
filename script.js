@@ -35,17 +35,17 @@ function draw() {
   // input into html
   inputDiv.innerHTML =
     "Distancia 1: " +
-    distancia1 / 1000 +
+    (distancia1 - 4000) / 100 +
     "m <br>" +
     " Distancia 2: " +
-    distancia2 / 1000 +
+    (distancia2 - 4000) / 100 +
     "m <br>" +
     " Distancia 3: " +
-    distancia3 / 1000 +
+    (distancia3 - 4000) / 100 +
     "m";
-  var sensor1 = distancia3 / 20;
-  var sensor2 = distancia2 / 20;
-  var sensor3 = distancia1 / 20;
+  var sensor1 = (distancia1 - 4000) / 2;
+  var sensor2 = (distancia2 - 4000) / 2;
+  var sensor3 = (distancia3 - 4000) / 2;
 
   // var sensor1 = Math.sqrt((xTamanho**2 + yTamanho**2)/4);
   // var sensor2 = Math.sqrt((xTamanho**2 + yTamanho**2)/4);
