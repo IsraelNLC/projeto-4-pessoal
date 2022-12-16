@@ -112,3 +112,17 @@ function get_data() {
   xhttp.open("GET", url, true);
   xhttp.send();
 }
+
+// codigo buzzer (lembrar de tirar do html)
+function buzzerSearch(x) {
+  let url = "/getbuzzer";
+  $.ajax({
+    type: "POST",
+    url: url,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify({
+      status: x,
+    }),
+  });
+}

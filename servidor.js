@@ -22,6 +22,7 @@ servidor.get("/", function (res, req, next) {
 var externalDist1 = 4510;
 var externalDist2 = 4920;
 var externalDist3 = 4850;
+var externalBuzzer = 0;
 
 servidor.post("/getdistances", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -42,6 +43,28 @@ servidor.get("/getdistances", function (req, res) {
     dist1: externalDist1,
     dist2: externalDist2,
     dist3: externalDist3,
+  };
+  jsonD = JSON.stringify(dados);
+  res.send(jsonD);
+});
+
+// codigo buzzer
+servidor.post("/getbuzzer", function (req, res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  console.log(req);
+  console.log(req.body);
+  externalBuzzer = req.body.status;
+  texto = req.body;
+  console.log(texto);
+  console.log("Recebi um dado");
+  res.send(texto);
+});
+
+// codigo buzzer
+servidor.get("/getbuzzer", function (req, res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  dados = {
+    status: externalBuzzer,
   };
   jsonD = JSON.stringify(dados);
   res.send(jsonD);
